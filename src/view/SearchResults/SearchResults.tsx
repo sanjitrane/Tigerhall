@@ -1,15 +1,15 @@
-import { Box, Flex, SimpleGrid, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Box, CircularProgress, Flex, SimpleGrid, Text, useBreakpointValue } from "@chakra-ui/react";
 import { Settings } from "../../Settings";
 import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import ResultCard from "../../component/Card/ResultCard";
 import { SearchContext } from "../../context/SearchContext";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const SearchResults = () =>{
   const {brandTheme, mode} = useContext(ThemeContext)
-  const {searchData} = useContext(SearchContext)
-  const [loaded, setLoaded] = useState(false)
-  
+  const useSearch = useContext(SearchContext)
+
   const searchViewStyles = {
     base:{
       position:'absolute',
@@ -25,22 +25,36 @@ const SearchResults = () =>{
       color: `${brandTheme[mode].color}`,
       mb:'40px',
       textAlign:'left'
-    }
-    
-
+    },
+    noResult:{
+      fontFamily:'PPFormula-Medium',
+      fontSize:'16px',
+      color: `${brandTheme[mode].card.progressBar.completed}`,
+      mb:'40px',
+      textAlign:'left'
+    },
   }
+  const {searchResults, loading, fetchContent} = useSearch
+  const [loaded, setLoaded] = useState(false)
+
+  
 
   const isMobile = useBreakpointValue({ base: true, md: false });
-  console.log('Search data:', searchData)
+  
+  const loadMore = ()=>{
+    //fetchContent()
+    console.log('called')
+  }
 
   useEffect(()=>{
-    if(searchData.hasOwnProperty('contentCards')){
+    if(searchResults.hasOwnProperty('contentCards')){
       setLoaded(true)
     }else{
       setLoaded(false)
     }
-  },[searchData])
+  },[searchResults])
 
+  
   return (
     <Box
     sx={{
@@ -55,12 +69,22 @@ const SearchResults = () =>{
       sx={searchViewStyles.text}
       >Tigerhall Library</Text>
       {loaded && 
-        <SimpleGrid spacing={'24px'} minChildWidth={'244px'} columns={{ base: 2, md: 5 }}>
-          {searchData?.contentCards?.edges.map((edge)=>{
-            return <ResultCard data={edge}/>
-          })}
-          
-        </SimpleGrid>
+        // <InfiniteScroll
+        // dataLength={searchResults?.contentCards?.edges.length}
+        // next={loadMore}
+        // hasMore={true}
+        // loader={<CircularProgress isIndeterminate color='orange.300' />}
+        // >
+          <SimpleGrid spacing={'24px'} minChildWidth={'244px'} columns={{ base: 2, md: 5 }}>
+            {searchResults?.contentCards?.edges.map((edge, index)=>{
+              return <ResultCard key={edge.id} data={edge}/>
+            })}
+            {(!searchResults?.contentCards?.edges.length) &&
+              <Text sx={searchViewStyles.noResult}>No records to show</Text>
+            }
+            
+          </SimpleGrid>
+        // </InfiniteScroll>
       }
     </Box>
   )

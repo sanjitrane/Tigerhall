@@ -17,6 +17,7 @@ export type ImageType = {
 
 export type EdgeType = {
   name:string
+  id: string
   length:number
   categories: CategoryType[]
   experts: ExpertType[]

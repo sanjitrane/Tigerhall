@@ -1,10 +1,11 @@
-import {gql} from '@apollo/client';
+import {gql, useQuery} from '@apollo/client';
 
 export const GET_CONTENT = gql`
-{contentCards(filter:{limit:20, keywords:"", types:[PODCAST]}){
+query getContent($keywords:String!){contentCards(filter:{limit:20, keywords:$keywords, types:[PODCAST]}){
   edges{
     ... on Podcast{
       name
+      id
       length
       image{
         uri
