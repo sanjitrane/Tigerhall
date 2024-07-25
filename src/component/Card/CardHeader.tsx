@@ -4,14 +4,25 @@ import Listen from "../Listen/Listen";
 import { useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import Timer from "../Timer/Timer";
+import { ImageType } from "../../Types";
 
+type Props={
+  image: ImageType | null
+  time: number
+}
 
-const CardHeader = ()=>{
+const CardHeader = ({image, time}: Props)=>{
   const {brandTheme, mode} = useContext(ThemeContext)
 
   const cardStyles = {
     base:{
       position:'relative',
+    },
+    image:{
+      objectFit:'cover',
+      borderRadius:`8px 8px 0 0`,
+      height:'120px',
+      width:'100%'
     },
     tag:{
       position:'absolute',
@@ -37,12 +48,9 @@ const CardHeader = ()=>{
       sx={cardStyles.base}
     >
       <Image
-      src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
+      src= {image?.uri}
       alt='img'
-      borderRadius={`8px 8px 0 0`}
-      height='auto'
-      maxH='120px'
-      width='100%'
+      sx={cardStyles.image}
     />
     <Box
       sx={cardStyles.tag}
@@ -57,7 +65,7 @@ const CardHeader = ()=>{
     <Box
       sx={cardStyles.timer}
     >
-      <Timer/>
+      <Timer time={time}/>
     </Box>
     
     </Box>

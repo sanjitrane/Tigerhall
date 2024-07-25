@@ -1,15 +1,24 @@
 import { Box, Flex, Spacer, Text } from "@chakra-ui/react"
 import { ThemeContext } from "../../context/ThemeContext";
 import { useContext } from "react";
+import { EdgeType } from "../../Types";
+import { listToString } from "../../utils";
 
-const CardBody = ()=>{
+type Props={
+  info: EdgeType
+}
+
+const CardBody = ({info}:EdgeType)=>{
   const {brandTheme, mode} = useContext(ThemeContext)
+  const {name, experts, categories} = info
+  
   const bodyStyle = {
     base:{
       flexDirection:'column',
       alignItems:'start',
       p:'8px 8px 12px 8px',
-      backgroundColor: `${brandTheme[mode].card.bg}`
+      backgroundColor: `${brandTheme[mode].card.bg}`,
+      height:'109px'
     },
     box:{
       width:'100%'
@@ -57,11 +66,11 @@ const CardBody = ()=>{
       <Text
       sx={bodyStyle.headerText}
       noOfLines={1}
-      >Line 12433242343242dfdsgdsgdsgdfsgdgdsgdsgdsgdsg</Text>
+      >{listToString(categories,'name')}</Text>
       <Text
       sx={bodyStyle.titleText}
-      noOfLines={[3,2,1]}
-      >Peak Performance: Going To From Good to Great with Simon Taudel. Peak Performance: Going From Good to Great with Simon Taudel.
+      noOfLines={[1,2,3]}
+      >{name}
       </Text>
       </Box>
       <Box sx={bodyStyle.box}>
@@ -69,13 +78,13 @@ const CardBody = ()=>{
       sx={bodyStyle.authorText}
       noOfLines={1}
       >
-      Jane Doe
+      {`${experts[0].firstName} ${experts[0].lastName}`}
       </Text>
       <Text
       sx={bodyStyle.authorDesg}
       noOfLines={1}
       >
-      Subway APAC
+      {`${experts[0].__typename}`}
       </Text>
       </Box>
     </Flex>

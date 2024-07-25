@@ -1,8 +1,13 @@
 import { Flex, Image, Text } from "@chakra-ui/react"
 import { useContext } from "react"
 import { ThemeContext } from "../../context/ThemeContext"
+import { convertSecToMin } from "../../utils"
 
-const Timer = ()=>{
+type Props={
+  time: number
+}
+
+const Timer = ({time}:Props)=>{
   const {brandTheme, mode} = useContext(ThemeContext)
   const timeStyles = {
     backgroundColor: `${brandTheme[mode].card.time.bg}`,
@@ -21,7 +26,7 @@ const Timer = ()=>{
     <Image src='/time.svg' alt='content time'/>
     <Text
       sx={timeStyles.text}
-    >20m</Text>
+    >{`${convertSecToMin(time)}m`}</Text>
   </Flex>)
 }
 

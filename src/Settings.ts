@@ -1,4 +1,7 @@
 export const Settings = {
+  graphQl:{
+    endpoint:'https://api.tigerhall.net/v2/'
+  },
   header:{
     height:'64px',
     zIndex:999,

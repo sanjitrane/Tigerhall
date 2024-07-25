@@ -3,14 +3,20 @@ import CardHeader from "./CardHeader";
 import ProgressBar from "../Progress/ProgressBar";
 import CardBody from "./CardBody";
 import CardFooter from "./CardFooter";
+import { EdgeType } from "../../Types";
 
-const ResultCard = ()=>{
+type Props = {
+  data: EdgeType
+}
+
+const ResultCard = ({data}:Props)=>{
+  const {image, length} = data
   return <Card bg="white" maxW='244px'>
 
-  <CardHeader/>
+  <CardHeader image={image} time={length}/>
   
   <ProgressBar/>
-  <CardBody/>
+  <CardBody info={data}/>
 
   <CardFooter/>
 </Card>

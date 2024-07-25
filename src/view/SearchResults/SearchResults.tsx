@@ -1,11 +1,15 @@
 import { Box, Flex, SimpleGrid, Text, useBreakpointValue } from "@chakra-ui/react";
 import { Settings } from "../../Settings";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import ResultCard from "../../component/Card/ResultCard";
+import { SearchContext } from "../../context/SearchContext";
 
 const SearchResults = () =>{
   const {brandTheme, mode} = useContext(ThemeContext)
+  const {searchData} = useContext(SearchContext)
+  const [loaded, setLoaded] = useState(false)
+  
   const searchViewStyles = {
     base:{
       position:'absolute',
@@ -27,6 +31,15 @@ const SearchResults = () =>{
   }
 
   const isMobile = useBreakpointValue({ base: true, md: false });
+  console.log('Search data:', searchData)
+
+  useEffect(()=>{
+    if(searchData.hasOwnProperty('contentCards')){
+      setLoaded(true)
+    }else{
+      setLoaded(false)
+    }
+  },[searchData])
 
   return (
     <Box
@@ -41,45 +54,14 @@ const SearchResults = () =>{
       <Text
       sx={searchViewStyles.text}
       >Tigerhall Library</Text>
-      <SimpleGrid spacing={'24px'} minChildWidth={'244px'} columns={{ base: 2, md: 5 }}>
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-        <ResultCard/>
-
-        
-      </SimpleGrid>
+      {loaded && 
+        <SimpleGrid spacing={'24px'} minChildWidth={'244px'} columns={{ base: 2, md: 5 }}>
+          {searchData?.contentCards?.edges.map((edge)=>{
+            return <ResultCard data={edge}/>
+          })}
+          
+        </SimpleGrid>
+      }
     </Box>
   )
 }

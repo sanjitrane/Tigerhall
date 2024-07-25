@@ -3,6 +3,7 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import { ThemeContext } from "../context/ThemeContext";
 import Header from "../component/Header/Header";
 import SearchResults from "../view/SearchResults/SearchResults";
+import { SearchContextProvider } from "../context/SearchContext";
 
 /**
  * 
@@ -13,7 +14,7 @@ import SearchResults from "../view/SearchResults/SearchResults";
 const RootLayout =()=>{
   const {brandTheme, mode} = useContext(ThemeContext)
   
-  return <>
+  return <SearchContextProvider>
   <Grid bg={brandTheme[mode].header.bg}>
     <GridItem as="header">
       <Header/>
@@ -23,7 +24,7 @@ const RootLayout =()=>{
     </GridItem>
   </Grid>
   
-  </>
+  </SearchContextProvider>
 }
 
 export default RootLayout;
