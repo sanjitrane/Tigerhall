@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, SimpleGrid, Text, useBreakpointValue } from "@chakra-ui/react";
 import { Settings } from "../../Settings";
 import { useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
@@ -11,7 +11,7 @@ const SearchResults = () =>{
       position:'absolute',
       top: `${Settings.header.height}`,
       p: `60px 62px`,
-      height:`100%`
+      width:'100%'
     },
     text:{
       fontFamily:'PPFormula-Bold',
@@ -19,21 +19,67 @@ const SearchResults = () =>{
       fontWeight:700,
       lineHeight:'28.8px',
       color: `${brandTheme[mode].color}`,
-      mb:'40px'
+      mb:'40px',
+      textAlign:'left'
     }
     
 
   }
+
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
   return (
     <Box
-    sx={searchViewStyles.base}
+    sx={{
+      ...searchViewStyles.base,
+      display: isMobile ? 'flex' : 'block',
+      flexDirection: isMobile ? 'column' : 'row',
+      justifyContent: isMobile ? 'center' : 'flex-start', 
+      alignItems: 'center',
+    }}
     >
       <Text
       sx={searchViewStyles.text}
       >Tigerhall Library</Text>
-      <Flex gap={24}>
+      <SimpleGrid spacing={'24px'} minChildWidth={'244px'} columns={{ base: 2, md: 5 }}>
         <ResultCard/>
-      </Flex>
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+        <ResultCard/>
+
+        
+      </SimpleGrid>
     </Box>
   )
 }

@@ -41,6 +41,9 @@ export const brandTheme={
         bg: colorPalette.orange[50],
         textColor:  colorPalette.grey[900]
       },
+      podcast:{
+        bg:colorPalette.orange[600]
+      },
       time:{
         bg: 'rgba(0, 0, 0, 0.7)',
         textColor: colorPalette.white
@@ -75,6 +78,9 @@ export const brandTheme={
       tag: {
         bg: colorPalette.orange[50],
         textColor:  colorPalette.grey[900]
+      },
+      podcast:{
+        bg:colorPalette.orange[600]
       },
       time:{
         bg: 'rgba(0, 0, 0, 0.7)',
