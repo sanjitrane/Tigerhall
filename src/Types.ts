@@ -1,3 +1,5 @@
+import { brandTheme } from "./theme/theme"
+
 export type CategoryType = {
   name: string
   __typename: string
@@ -31,4 +33,21 @@ export type DataProps = {
 
 export type ContextChildrenType = {
   children: React.ReactNode
+}
+
+export type SearchContextType = {
+  searchQuery: string
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>> 
+  searchResults: any[]
+  loading:boolean
+  error:null
+  handleSearch:(query:string)=>void,
+}
+
+export type ThemeMode = "dark" | "light"
+
+export type ThemeContextType = {
+  brandTheme: typeof brandTheme
+  mode: ThemeMode
+  setMode: React.Dispatch<React.SetStateAction<ThemeMode>>
 }

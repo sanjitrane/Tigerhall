@@ -1,16 +1,7 @@
 import { createContext, useEffect, useState } from "react"
-import { ContextChildrenType, DataProps } from "../Types"
+import { ContextChildrenType, SearchContextType } from "../Types"
 import { GET_CONTENT } from "../queries/Content";
 import { useQuery } from "@apollo/client";
-
-type SearchContextType = {
-  searchQuery: string
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>> 
-  searchResults: any[]
-  loading:boolean
-  error:null
-  handleSearch:(query:string)=>void,
-}
 
 export const SearchContext = createContext({} as SearchContextType);
 
@@ -22,8 +13,7 @@ export const SearchContextProvider = ({children}:ContextChildrenType)=>{
 
   
     const { loading: searchLoading, error: searchError, data} = useQuery(GET_CONTENT,{
-      variables:{keywords: searchQuery},
-      skip: !searchQuery
+      variables:{keywords: searchQuery}
     });
   
 

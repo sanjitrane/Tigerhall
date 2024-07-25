@@ -37,6 +37,10 @@ const searchStyles = {
     
   },[deferredQuery])
 
+  useEffect(()=>{
+    setSearchQuery(deferredQuery)
+  },[])
+
   return <InputGroup
     maxWidth={{base: `${Settings.search.inputGroup.base.maxWidth}`, md: `${Settings.search.inputGroup.md.maxWidth}`}}
   >
