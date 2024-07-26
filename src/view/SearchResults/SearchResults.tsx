@@ -1,4 +1,4 @@
-import { Box, SimpleGrid, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Box, SimpleGrid, Skeleton, SkeletonCircle, SkeletonText, Text, background, useBreakpointValue } from "@chakra-ui/react";
 import { Settings } from "../../Settings";
 import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
@@ -17,6 +17,11 @@ const SearchResults = () =>{
       p: `60px 62px`,
       width:'100%'
     },
+    skeleton:{
+      backgroundColor: `${brandTheme[mode].card.bg}`,
+      borderRadius:'6px',
+      width:'244px',
+    },
     text:{
       fontFamily:'PPFormula-Bold',
       fontSize:'24px',
@@ -34,19 +39,10 @@ const SearchResults = () =>{
       textAlign:'left'
     },
   }
-  const {searchResults, loading, fetchContent} = useSearch
-  const [loaded, setLoaded] = useState(false)
-
+  const {searchResults, searchLoading} = useSearch
+  
   const isMobile = useBreakpointValue({ base: true, md: false });
   
-  useEffect(()=>{
-    if(searchResults.hasOwnProperty('contentCards')){
-      setLoaded(true)
-    }else{
-      setLoaded(false)
-    }
-  },[searchResults])
-
   
   return (
     <Box
@@ -61,7 +57,13 @@ const SearchResults = () =>{
       <Text
       sx={searchViewStyles.text}
       >Tigerhall Library</Text>
-      {loaded && 
+      {searchLoading && 
+        <Box padding='6' boxShadow='lg' sx={searchViewStyles.skeleton}>
+        <Skeleton height={'120px'} />
+        <SkeletonText mt='4' noOfLines={4} spacing='4' skeletonHeight='2' />
+      </Box>
+      }
+      {!searchLoading && 
         <SimpleGrid spacing={'24px'} minChildWidth={'244px'} columns={{ base: 5, md: 5 }}>
           {searchResults?.contentCards?.edges.map((edge, index)=>{
             return <ResultCard key={edge.id} data={edge}/>

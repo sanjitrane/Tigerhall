@@ -39,8 +39,8 @@ export type SearchContextType = {
   searchQuery: string
   setSearchQuery: React.Dispatch<React.SetStateAction<string>> 
   searchResults: any[]
-  loading:boolean
-  error:null
+  searchLoading:boolean
+  searchError:null
   handleSearch:(query:string)=>void,
 }
 
